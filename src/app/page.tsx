@@ -11,12 +11,11 @@ export const revalidate = 60;
 
 export default async function Home() {
   const supabase = getSupabaseClient();
-  const { data: letter } = await supabase
+  const { data: letters } = await supabase
     .from("letters")
     .select("*")
     .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle<Letter>();
+    .returns<Letter[]>();
 
   return (
     <main className="min-h-screen px-4 py-8 sm:py-12">
@@ -28,8 +27,12 @@ export default async function Home() {
           <p className="mt-2 text-stone-500">{SITE_SUBTITLE}</p>
         </header>
 
-        {letter ? (
-          <PrayerLetterCard letter={letter} />
+        {letters && letters.length > 0 ? (
+          <div className="flex flex-col gap-8">
+            {letters.map((letter) => (
+              <PrayerLetterCard key={letter.id} letter={letter} />
+            ))}
+          </div>
         ) : (
           <p className="rounded-2xl bg-white p-8 text-center text-stone-400 ring-1 ring-stone-200">
             아직 등록된 기도편지가 없습니다. Supabase Table Editor에서

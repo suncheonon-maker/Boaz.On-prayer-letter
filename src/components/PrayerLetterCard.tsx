@@ -1,5 +1,5 @@
-import Image from "next/image";
 import type { Letter } from "@/lib/types";
+import LetterGallery from "./LetterGallery";
 import PrayerButton from "./PrayerButton";
 
 function formatDate(dateString: string) {
@@ -13,18 +13,7 @@ function formatDate(dateString: string) {
 export default function PrayerLetterCard({ letter }: { letter: Letter }) {
   return (
     <article className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-stone-200">
-      {letter.image_url && (
-        <div className="relative aspect-[4/3] w-full sm:aspect-[16/9]">
-          <Image
-            src={letter.image_url}
-            alt={letter.title}
-            fill
-            sizes="(max-width: 640px) 100vw, 640px"
-            className="object-cover"
-            priority
-          />
-        </div>
-      )}
+      <LetterGallery images={letter.image_urls} alt={letter.title} />
 
       <div className="p-5 sm:p-8">
         <p className="text-sm text-stone-400">{formatDate(letter.created_at)}</p>

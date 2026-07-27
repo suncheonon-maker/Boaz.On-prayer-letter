@@ -5,12 +5,12 @@
 
 create extension if not exists pgcrypto;
 
--- 1) letters: 기도편지 게시글
+-- 1) letters: 기도편지 게시글 (사진 여러 장을 갤러리로 넣을 수 있습니다)
 create table if not exists public.letters (
   id uuid primary key default gen_random_uuid(),
   title text not null,
   content text not null,
-  image_url text,
+  image_urls text[] not null default '{}',
   created_at timestamptz not null default now()
 );
 
@@ -54,10 +54,10 @@ alter publication supabase_realtime add table public.prayers;
 -- 첫 기도편지 예시 글입니다. 그대로 실행해서 넣고, 나중에 Table Editor에서
 -- title/content를 자유롭게 수정하세요.
 --
--- image_url은 우선 프로젝트에 포함된 로컬 이미지 경로(/images/kazakhstan-prayer-letter.png)를
--- 사용합니다. Supabase Storage에 사진을 올리셨다면 그 공개 URL로 바꿔주세요.
+-- image_urls는 우선 프로젝트에 포함된 로컬 이미지 경로를 사용합니다.
+-- Supabase Storage에 사진을 올리셨다면 그 공개 URL로 배열을 채워주세요.
 -- ============================================================
-insert into public.letters (title, content, image_url) values (
+insert into public.letters (title, content, image_urls) values (
   '카자흐스탄 기도편지',
   '사랑하는 동역자 여러분, 평안하신가요?
 
@@ -66,5 +66,5 @@ insert into public.letters (title, content, image_url) values (
 예상치 못한 어려움도 있었지만, 팀원 모두가 무사히 사역을 마치고 돌아올 수 있었던 것 역시 기도로 함께해주신 동역자 여러분 덕분입니다.
 
 이 자리를 통해 만난 카자흐스탄의 학생들과 교회가 계속해서 신앙 안에서 자라가도록, 그리고 다음 사역을 준비하는 저희를 위해 함께 기도로 동역해 주세요.',
-  '/images/kazakhstan-prayer-letter.png'
+  array['/images/kazakhstan-prayer-letter.png']
 );

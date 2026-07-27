@@ -2,6 +2,6 @@ export type Letter = {
   id: string;
   title: string;
   content: string;
-  image_url: string | null;
+  image_urls: string[];
   created_at: string;
 };
