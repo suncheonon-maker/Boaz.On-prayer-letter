@@ -12,6 +12,8 @@ create table if not exists public.letters (
   content text not null,
   image_urls text[] not null default '{}',
   is_pinned boolean not null default false,
+  sort_order integer not null default 0,
+  show_prayer_button boolean not null default false,
   created_at timestamptz not null default now()
 );
 

@@ -15,6 +15,7 @@ export default async function Home() {
     .from("letters")
     .select("*")
     .order("is_pinned", { ascending: false })
+    .order("sort_order", { ascending: true })
     .order("created_at", { ascending: false })
     .returns<Letter[]>();
 
@@ -30,11 +31,11 @@ export default async function Home() {
 
         {letters && letters.length > 0 ? (
           <div className="flex flex-col gap-8">
-            {letters.map((letter, index) => (
+            {letters.map((letter) => (
               <PrayerLetterCard
                 key={letter.id}
                 letter={letter}
-                showPrayerButton={index === 0}
+                showPrayerButton={letter.show_prayer_button}
               />
             ))}
           </div>
