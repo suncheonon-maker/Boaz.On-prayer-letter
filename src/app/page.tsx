@@ -14,6 +14,7 @@ export default async function Home() {
   const { data: letters } = await supabase
     .from("letters")
     .select("*")
+    .order("is_pinned", { ascending: false })
     .order("created_at", { ascending: false })
     .returns<Letter[]>();
 
@@ -29,8 +30,12 @@ export default async function Home() {
 
         {letters && letters.length > 0 ? (
           <div className="flex flex-col gap-8">
-            {letters.map((letter) => (
-              <PrayerLetterCard key={letter.id} letter={letter} />
+            {letters.map((letter, index) => (
+              <PrayerLetterCard
+                key={letter.id}
+                letter={letter}
+                showPrayerButton={index === 0}
+              />
             ))}
           </div>
         ) : (

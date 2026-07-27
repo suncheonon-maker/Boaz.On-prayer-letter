@@ -11,6 +11,7 @@ create table if not exists public.letters (
   title text not null,
   content text not null,
   image_urls text[] not null default '{}',
+  is_pinned boolean not null default false,
   created_at timestamptz not null default now()
 );
 

@@ -10,7 +10,13 @@ function formatDate(dateString: string) {
   }).format(new Date(dateString));
 }
 
-export default function PrayerLetterCard({ letter }: { letter: Letter }) {
+export default function PrayerLetterCard({
+  letter,
+  showPrayerButton = false,
+}: {
+  letter: Letter;
+  showPrayerButton?: boolean;
+}) {
   return (
     <article className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-stone-200">
       <LetterGallery images={letter.image_urls} alt={letter.title} />
@@ -24,7 +30,7 @@ export default function PrayerLetterCard({ letter }: { letter: Letter }) {
           {letter.content}
         </p>
 
-        <PrayerButton />
+        {showPrayerButton && <PrayerButton />}
       </div>
     </article>
   );
