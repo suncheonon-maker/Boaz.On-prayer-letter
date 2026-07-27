@@ -18,7 +18,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className="font-sans text-stone-800 antialiased">{children}</body>
+      <body
+        className="font-sans text-stone-800 antialiased bg-cover bg-center bg-no-repeat bg-fixed"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(250,250,249,0.88), rgba(250,250,249,0.88)), url('/images/almaty-background.jpg')",
+        }}
+      >
+        {children}
+      </body>
     </html>
   );
 }
